@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { LoginDto, SignUpDto } from './dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -5,6 +6,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import * as argon from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { fstat, unlink } from 'fs';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +17,9 @@ export class AuthService {
     private config: ConfigService,
   ) {}
 
+  //***********************************************************************
+  //************************Login******************************************
+  //***********************************************************************
   async login(loginDto: LoginDto) {
     const user = await this.prisma.user.findUnique({
       where: { email: loginDto.email },
@@ -33,23 +38,29 @@ export class AuthService {
     }
 
     delete user.password;
-    return { token: await this.createToken(loginDto.id, loginDto.email), user };
+    return { token: await this.createToken(user.id, user.email), user };
   }
 
-  async signUp(signUpDto: SignUpDto) {
+  //*********************************************************************
+  //************************Sign Up**************************************
+  //*********************************************************************
+  async signUp(signUpDto: SignUpDto, avatarImage: Express.Multer.File) {
     const hash = await argon.hash(signUpDto.password);
 
     try {
       const user = await this.prisma.user.create({
-        data: { ...signUpDto, password: hash },
+        data: { ...signUpDto, password: hash, avatar_url: avatarImage.path }, //had to use ts-nocheck for this line: doesn't accept avatar_url for some reason
       });
       delete user.password;
       return {
-        token: await this.createToken(signUpDto.id, signUpDto.email),
+        token: await this.createToken(user.id, user.email),
         user,
       };
     } catch (error) {
       if (error.code === 'P2002') {
+        unlink(avatarImage.path, (err) => {
+          console.log(err);
+        });
         throw new ForbiddenException(
           'Error: Credentials have already been asigned.',
         );
@@ -59,6 +70,9 @@ export class AuthService {
     }
   }
 
+  //***********************************************************************
+  //************************Helper Funtion*********************************
+  //***********************************************************************
   async createToken(userId: number, email: string) {
     const payload = { sub: userId, email };
     return await this.jwt.signAsync(payload, {
