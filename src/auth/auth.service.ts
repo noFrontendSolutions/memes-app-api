@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { LoginDto, SignUpDto } from './dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -6,7 +5,6 @@ import { PrismaService } from '../prisma/prisma.service';
 import * as argon from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { fstat, unlink } from 'fs';
 
 @Injectable()
 export class AuthService {
@@ -44,12 +42,16 @@ export class AuthService {
   //*********************************************************************
   //************************Sign Up**************************************
   //*********************************************************************
-  async signUp(signUpDto: SignUpDto, avatarImage: Express.Multer.File) {
+  async signUp(signUpDto: SignUpDto, avatar: Express.Multer.File) {
     const hash = await argon.hash(signUpDto.password);
 
     try {
       const user = await this.prisma.user.create({
-        data: { ...signUpDto, password: hash, avatar_url: avatarImage.path }, //had to use ts-nocheck for this line: doesn't accept avatar_url for some reason
+        data: {
+          ...signUpDto,
+          password: hash,
+          avatar_url: avatar?.path,
+        },
       });
       delete user.password;
       return {
@@ -58,9 +60,6 @@ export class AuthService {
       };
     } catch (error) {
       if (error.code === 'P2002') {
-        unlink(avatarImage.path, (err) => {
-          console.log(err);
-        });
         throw new ForbiddenException(
           'Error: Credentials have already been asigned.',
         );
