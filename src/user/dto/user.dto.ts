@@ -1,7 +1,10 @@
-export class UserDto {
-  id: number;
-  email: string;
-  password: string;
-  first_name: string;
-  last_name: string;
+import { IsInt, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+
+export class PostMemeDto {
+  @IsNotEmpty()
+  @IsString()
+  title: string;
+
+  @IsNotEmpty()
+  user_id: number;
 }

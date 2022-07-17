@@ -30,9 +30,9 @@ model Meme {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   title      String
-  url        String
-  userId     Int
-  user       User     @relation(fields: [userId], references: [id])
+  meme_url   String
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id])
 
   @@map("memes")
 }

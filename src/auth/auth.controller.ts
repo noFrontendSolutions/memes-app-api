@@ -14,7 +14,6 @@ import { LoginDto, SignUpDto } from './dto';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import { parse, resolve } from 'path';
-import { response } from 'express';
 import { Response } from 'express';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -25,15 +24,6 @@ export class AuthController {
     private prisma: PrismaService,
   ) {}
 
-  @Get('avatars/:id')
-  async sendAvatar(@Param() params, @Res() response: Response) {
-    const id = parseInt(params.id);
-    const user = await this.prisma.user.findUnique({
-      where: { id: id },
-    });
-    response.sendFile(user.avatar_url, { root: resolve('./') });
-  }
-
   @Post('login')
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
@@ -43,7 +33,7 @@ export class AuthController {
   @UseInterceptors(
     FileInterceptor('avatar', {
       storage: diskStorage({
-        destination: './static/user-avatars',
+        destination: './public/avatars',
         filename: createUniqueFilename,
       }),
       fileFilter: validateFileFormat,
@@ -53,8 +43,17 @@ export class AuthController {
     @Body() signUpDto: SignUpDto,
     @UploadedFile() avatar: Express.Multer.File,
   ) {
-    console.log(avatar);
+    //console.log(avatar);
     return this.authService.signUp(signUpDto, avatar);
+  }
+
+  @Get('avatars/:id')
+  async sendAvatar(@Param() params, @Res() response: Response) {
+    const id = parseInt(params.id);
+    const user = await this.prisma.user.findUnique({
+      where: { id: id },
+    });
+    response.sendFile(user.avatar_url, { root: resolve('./') });
   }
 }
 
