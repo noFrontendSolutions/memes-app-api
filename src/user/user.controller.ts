@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Post,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -13,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { PostMemeDto } from './dto';
+import { Response } from 'express';
 
 @Controller('users')
 export class UserController {
@@ -31,8 +33,9 @@ export class UserController {
   postMeme(
     @Body() postMemeDto: PostMemeDto,
     @UploadedFile() memeFile: Express.Multer.File,
+    @Res() res: Response,
   ) {
-    this.userService.postMeme(postMemeDto, memeFile);
+    this.userService.postMeme(postMemeDto, memeFile, res);
   }
 }
 

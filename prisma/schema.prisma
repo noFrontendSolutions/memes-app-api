@@ -31,6 +31,7 @@ model Meme {
   updated_at DateTime @updatedAt
   title      String
   meme_url   String
+  user_name  String
   user_id    Int
   user       User     @relation(fields: [user_id], references: [id])
 
