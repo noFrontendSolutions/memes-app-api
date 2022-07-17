@@ -12,3 +12,16 @@ export class PostMemeDto {
   @IsString()
   user_name: string;
 }
+
+export class PostCommentDto {
+  @IsNotEmpty()
+  @IsString()
+  content: string;
+
+  @IsNotEmpty()
+  @IsString()
+  user_name: string;
+
+  @IsNotEmpty()
+  user_id: number;
+}

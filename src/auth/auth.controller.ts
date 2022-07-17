@@ -19,15 +19,20 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private authService: AuthService,
-    private prisma: PrismaService,
-  ) {}
+  constructor(private authService: AuthService) {}
+
+  //*************************************************************************************
+  //*****************************LOGIN***************************************************
+  //*************************************************************************************
 
   @Post('login')
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
   }
+
+  //*************************************************************************************
+  //*****************************SIGN UP*************************************************
+  //*************************************************************************************
 
   @Post('sign-up')
   @UseInterceptors(
@@ -47,13 +52,13 @@ export class AuthController {
     return this.authService.signUp(signUpDto, avatar);
   }
 
+  //*************************************************************************************
+  //*****************************GET AVATAR IMAGE****************************************
+  //*************************************************************************************
+
   @Get('avatars/:id')
-  async sendAvatar(@Param() params, @Res() response: Response) {
-    const id = parseInt(params.id);
-    const user = await this.prisma.user.findUnique({
-      where: { id: id },
-    });
-    response.sendFile(user.avatar_url, { root: resolve('./') });
+  async getAvatar(@Param() param, @Res() response: Response) {
+    return this.authService.getAvatar(param, response);
   }
 }
 

@@ -13,12 +13,17 @@ import { parse } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { PostMemeDto } from './dto';
+import { PostCommentDto, PostMemeDto } from './dto';
 import { Response } from 'express';
 
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
+
+  //*************************************************************************************
+  //***************************POST MEME*************************************** */#
+  //*************************************************************************************
+
   @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(
     FileInterceptor('meme', {
@@ -36,6 +41,15 @@ export class UserController {
     @Res() res: Response,
   ) {
     this.userService.postMeme(postMemeDto, memeFile, res);
+  }
+  //*************************************************************************************
+  //***************************POST Comment*************************************** */#
+  //*************************************************************************************
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('post-comment')
+  postComment(@Body() postCommentDto: PostCommentDto, @Res() res: Response) {
+    this.userService.postComment(postCommentDto, res);
   }
 }
 

@@ -43,8 +43,9 @@ model Comment {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   content    String
-  userId     Int
-  user       User     @relation(fields: [userId], references: [id])
+  user_name  String
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id])
 
   @@map("comments")
 }

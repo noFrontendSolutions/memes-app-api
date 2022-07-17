@@ -5,6 +5,8 @@ import { PrismaService } from '../prisma/prisma.service';
 import * as argon from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { Response } from 'express';
+import { resolve } from 'path';
 
 @Injectable()
 export class AuthService {
@@ -67,6 +69,14 @@ export class AuthService {
         throw error;
       }
     }
+  }
+
+  async getAvatar(param, response: Response) {
+    const id = parseInt(param.id);
+    const user = await this.prisma.user.findUnique({
+      where: { id: id },
+    });
+    response.sendFile(user.avatar_url, { root: resolve('./') });
   }
 
   //***********************************************************************
