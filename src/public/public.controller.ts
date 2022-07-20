@@ -15,4 +15,9 @@ export class PublicController {
   async memeImage(@Param() param, @Res() res: Response) {
     return this.publicService.memeImage(param, res);
   }
+
+  @Get('meme-stats/:id')
+  async memeStats(@Param() param, @Res() res: Response) {
+    return this.publicService.memeStats(param, res);
+  }
 }

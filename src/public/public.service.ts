@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Response } from 'express';
@@ -11,7 +12,7 @@ export class PublicService {
     const memeInfo = await this.prisma.meme.findMany({
       orderBy: { created_at: 'asc' },
     });
-    return { ...memeInfo };
+    return memeInfo;
   }
 
   async memeImage(param, res: Response) {
@@ -20,5 +21,16 @@ export class PublicService {
     });
     const memeUrl = memeInfo.meme_url;
     res.sendFile(memeUrl, { root: resolve('./') });
+  }
+
+  async memeStats(param, res: Response) {
+    const comments = await this.prisma.meme.findFirst({
+      where: { id: parseInt(param.id) },
+      include: {
+        stats: true,
+        comments: true,
+      },
+    });
+    res.send(comments);
   }
 }

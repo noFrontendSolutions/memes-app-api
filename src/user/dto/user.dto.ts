@@ -24,4 +24,7 @@ export class PostCommentDto {
 
   @IsNotEmpty()
   user_id: number;
+
+  @IsNotEmpty()
+  meme_id: number;
 }

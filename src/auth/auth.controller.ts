@@ -13,9 +13,8 @@ import { AuthService } from './auth.service';
 import { LoginDto, SignUpDto } from './dto';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
-import { parse, resolve } from 'path';
+import { parse } from 'path';
 import { Response } from 'express';
-import { PrismaService } from 'src/prisma/prisma.service';
 
 @Controller('auth')
 export class AuthController {

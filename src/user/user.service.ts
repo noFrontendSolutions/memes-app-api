@@ -26,7 +26,7 @@ export class UserService {
           meme_url: memeFile.path,
         },
       });
-      res.send({ ...memePost });
+      res.send(memePost);
     } catch (error) {
       throw error;
     }
@@ -43,6 +43,7 @@ export class UserService {
           content: postCommentDto.content,
           user_id: parseInt(postCommentDto.user_id),
           user_name: postCommentDto.user_name,
+          meme_id: parseInt(postCommentDto.meme_id),
         },
       });
       res.send({ ...details });
@@ -50,4 +51,16 @@ export class UserService {
       throw error;
     }
   }
+
+  //*************************************************************************************
+  //***************************Like Meme************************************************* */#
+  //*************************************************************************************
+
+  async likeMeme() {}
+
+  //*************************************************************************************
+  //***************************Like Comment*************************************** */#
+  //*************************************************************************************
+
+  async likeComment() {}
 }
