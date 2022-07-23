@@ -80,7 +80,7 @@ function validateFileFormat(req: any, file: Express.Multer.File, cb: any) {
     req.fileValidationError = 'Error: Wrong File extension.';
     return cb(null, false, new Error('Error: Wrong File extension.'));
   }
-  if (file.size >= 100000) {
+  if (file.size >= 500000) {
     req.fileValidationError = 'Error: File size too big.';
     return cb(null, false, new Error('Error: File size too big.'));
   }

@@ -1,4 +1,11 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsInstance,
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+} from 'class-validator';
 
 export class PostMemeDto {
   @IsNotEmpty()
@@ -26,5 +33,18 @@ export class PostCommentDto {
   user_id: number;
 
   @IsNotEmpty()
+  meme_id: number;
+}
+
+export class LikeMemeDto {
+  @IsNumber()
+  is_lover: number;
+
+  @IsNumber()
+  is_hater: number;
+
+  @IsNotEmpty()
+  user_id: number;
+
   meme_id: number;
 }

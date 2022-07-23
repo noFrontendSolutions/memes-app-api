@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Param,
   Post,
+  Put,
   Res,
   UploadedFile,
   UseGuards,
@@ -13,7 +15,7 @@ import { parse } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { PostCommentDto, PostMemeDto } from './dto';
+import { PostCommentDto, PostMemeDto, LikeMemeDto } from './dto';
 import { Response } from 'express';
 
 @Controller('users')
@@ -50,6 +52,16 @@ export class UserController {
   @Post('post-comment')
   postComment(@Body() postCommentDto: PostCommentDto, @Res() res: Response) {
     this.userService.postComment(postCommentDto, res);
+  }
+
+  //*************************************************************************************
+  //***************************Like Meme*************************************************
+  //*************************************************************************************
+
+  @UseGuards(AuthGuard('jwt'))
+  @Put('like-meme/:id')
+  likeMeme(@Param() param, @Body() body: any, @Res() res: Response) {
+    this.userService.likeMeme(param, body, res);
   }
 }
 
