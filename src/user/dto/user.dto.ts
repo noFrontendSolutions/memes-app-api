@@ -3,6 +3,7 @@ import {
   IsInstance,
   IsInt,
   IsNotEmpty,
+  isNumber,
   IsNumber,
   IsString,
 } from 'class-validator';
@@ -47,4 +48,10 @@ export class LikeMemeDto {
   user_id: number;
 
   meme_id: number;
+
+  @IsNumber()
+  likes_increment: number;
+
+  @IsNumber()
+  dislikes_increment: number;
 }

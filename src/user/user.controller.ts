@@ -53,15 +53,24 @@ export class UserController {
   postComment(@Body() postCommentDto: PostCommentDto, @Res() res: Response) {
     this.userService.postComment(postCommentDto, res);
   }
-
   //*************************************************************************************
-  //***************************Like Meme*************************************************
+  //***************************SET PREFERENCES******************************************
   //*************************************************************************************
 
   @UseGuards(AuthGuard('jwt'))
-  @Put('like-meme/:id')
-  likeMeme(@Param() param, @Body() body: any, @Res() res: Response) {
-    this.userService.likeMeme(param, body, res);
+  @Post('set-preferences')
+  setPreferences(@Body() body: any, @Res() res: Response) {
+    this.userService.setPreferences(body, res);
+  }
+
+  //*************************************************************************************
+  //***************************RESET PREFERENCES******************************************
+  //*************************************************************************************
+
+  @UseGuards(AuthGuard('jwt'))
+  @Put('set-preferences/:id')
+  resetPreferences(@Param() param, @Body() body: any, @Res() res: Response) {
+    this.userService.resetPreferences(param, body, res);
   }
 }
 

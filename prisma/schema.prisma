@@ -35,8 +35,8 @@ model Meme {
   user_name  String
   user       User        @relation(fields: [user_id], references: [id])
   user_id    Int
-  likes      Int?
-  dislikes   Int?
+  likes      Int?        @default(0)
+  dislikes   Int?        @default(0)
   comments   Comment[]
   stats      MemeStats[]
 
@@ -44,18 +44,16 @@ model Meme {
 }
 
 model MemeStats {
-  id             Int      @id @default(autoincrement())
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
-  meme_id        Int
-  meme           Meme     @relation(fields: [meme_id], references: [id])
-  is_lover       Int?     @db.TinyInt
-  is_hater       Int?     @db.TinyInt
-  made_comment   Int?     @db.TinyInt
-  user_id        Int
-  user           User     @relation(fields: [user_id], references: [id])
-  total_likes    Int?
-  total_dislikes Int?
+  id           Int      @id @default(autoincrement())
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  meme_id      Int
+  meme         Meme     @relation(fields: [meme_id], references: [id])
+  is_lover     Int?     @default(0) @db.TinyInt
+  is_hater     Int?     @default(0) @db.TinyInt
+  made_comment Int?     @default(0) @db.TinyInt
+  user_id      Int
+  user         User     @relation(fields: [user_id], references: [id])
 
   @@map("meme_stats")
 }

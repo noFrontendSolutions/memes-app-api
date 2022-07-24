@@ -51,31 +51,51 @@ export class UserService {
       throw error;
     }
   }
-
   //*************************************************************************************
-  //***************************Like Meme************************************************* */#
+  //***************************SET PREFERENCES*****************************************/#
   //*************************************************************************************
-
-  async likeMeme(param, body: any, res: Response) {
-    const updatedStats = await this.prisma.memeStats.upsert({
-      where: { id: parseInt(param.id) },
-      update: {
-        is_lover: parseInt(body.is_lover),
-        is_hater: parseInt(body.is_hater),
-        user_id: parseInt(body.user_id),
-        meme_id: parseInt(param.id),
-      },
-      create: {
-        meme_id: parseInt(param.id),
+  async setPreferences(body: any, res: Response) {
+    const updatedStats = await this.prisma.memeStats.create({
+      data: {
+        meme_id: parseInt(body.meme_id),
         is_lover: parseInt(body.is_lover),
         is_hater: parseInt(body.is_hater),
         user_id: parseInt(body.user_id),
       },
     });
+    const updatedMeme = await this.prisma.meme.update({
+      where: { id: parseInt(body.meme_id) },
+      data: {
+        likes: { increment: parseInt(body.likes_increment) },
+        dislikes: { increment: parseInt(body.dislikes_increment) },
+      },
+    });
 
-    res.send(updatedStats);
+    res.send({ memeInfo: updatedMeme, memeStats: updatedStats });
   }
 
+  //*************************************************************************************
+  //***************************RESET PREFERENCES*****************************************/#
+  //*************************************************************************************
+
+  async resetPreferences(param, body: any, res: Response) {
+    const updatedStats = await this.prisma.memeStats.update({
+      where: { id: parseInt(param.id) },
+      data: {
+        is_lover: parseInt(body.is_lover),
+        is_hater: parseInt(body.is_hater),
+      },
+    });
+    const updatedMeme = await this.prisma.meme.update({
+      where: { id: parseInt(body.meme_id) },
+      data: {
+        likes: { increment: parseInt(body.likes_increment) },
+        dislikes: { increment: parseInt(body.dislikes_increment) },
+      },
+    });
+
+    res.send({ memeInfo: updatedMeme, memeStats: updatedStats });
+  }
   //*************************************************************************************
   //***************************Like Comment*************************************** */#
   //*************************************************************************************
