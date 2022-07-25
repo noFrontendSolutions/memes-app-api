@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -49,9 +49,9 @@ model MemeStats {
   updated_at   DateTime @updatedAt
   meme_id      Int
   meme         Meme     @relation(fields: [meme_id], references: [id])
-  is_lover     Int?     @default(0) @db.TinyInt
-  is_hater     Int?     @default(0) @db.TinyInt
-  made_comment Int?     @default(0) @db.TinyInt
+  is_lover     Int?     @default(0) @db.SmallInt
+  is_hater     Int?     @default(0) @db.SmallInt
+  made_comment Int?     @default(0) @db.SmallInt
   user_id      Int
   user         User     @relation(fields: [user_id], references: [id])
 
