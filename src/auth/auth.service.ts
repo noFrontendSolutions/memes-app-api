@@ -20,19 +20,16 @@ export class AuthService {
   //***********************************************************************
   //************************Login******************************************
   //***********************************************************************
-  async login(loginDto: LoginDto) {
+  async login(body: LoginDto) {
     const user = await this.prisma.user.findUnique({
-      where: { email: loginDto.email },
+      where: { email: body.email },
     });
 
     if (!user) {
       throw new ForbiddenException('Error: User does not exist.');
     }
 
-    const isPasswordMatch = await argon.verify(
-      user.password,
-      loginDto.password,
-    );
+    const isPasswordMatch = await argon.verify(user.password, body.password);
     if (!isPasswordMatch) {
       throw new ForbiddenException('Error: Password does not match.');
     }
@@ -44,19 +41,24 @@ export class AuthService {
   //*********************************************************************
   //************************Sign Up**************************************
   //*********************************************************************
-  async signUp(signUpDto: SignUpDto, avatar: Express.Multer.File) {
-    const hash = await argon.hash(signUpDto.password);
+  async signUp(body: SignUpDto, avatar: Express.Multer.File) {
+    const hash = await argon.hash(body.password);
 
     try {
       const user = await this.prisma.user.create({
         data: {
-          ...signUpDto,
+          ...body,
           password: hash,
           avatar_url: avatar?.path,
         },
       });
       delete user.password;
+
+      //here comes logic for email verification. Send an email that includes an a-tag with a link: "confirmation/:token".
+      //messgae: Click link and login with your email and password
+      //token gets not returnd as in below. Send message to client instead.
       return {
+        //message: "Please confirm your email"
         token: await this.createToken(user.id, user.email),
         user,
       };
@@ -71,12 +73,49 @@ export class AuthService {
     }
   }
 
+  //*********************************************************************
+  //************************Confirm User (not finished)******************
+  //*********************************************************************
+  async confirmUser(param: any) {
+    const secret = await this.config.get('JWT_SECRET');
+    const { email, sub } = await this.jwt.verify(param.token, {
+      secret: secret,
+    });
+
+    const user = await this.prisma.user.findUnique({
+      where: { email: email },
+    });
+    console.log(sub);
+    if (!user) {
+      throw new ForbiddenException('Error: User does not exist.');
+    }
+    /*  const updatedUser = await this.prisma.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        confirmed: 1,
+      },
+    }); */
+
+    //Redirect user to home page
+  }
+
+  //*********************************************************************
+  //************************Get Avatar**************************************
+  //*********************************************************************
+
   async getAvatar(param, response: Response) {
     const id = parseInt(param.id);
+
     const user = await this.prisma.user.findUnique({
       where: { id: id },
     });
-    response.sendFile(user.avatar_url, { root: resolve('./') });
+    let src = 'public/default-avatar.png';
+    if (user.avatar_url) {
+      src = user.avatar_url;
+    }
+    response.sendFile(src, { root: resolve('./') });
   }
 
   //***********************************************************************

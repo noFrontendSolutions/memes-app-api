@@ -25,8 +25,17 @@ export class AuthController {
   //*************************************************************************************
 
   @Post('login')
-  login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
+  login(@Body() body: LoginDto) {
+    return this.authService.login(body);
+  }
+
+  //*************************************************************************************
+  //*****************************Email Confirmation***************************************
+  //*************************************************************************************
+
+  @Get('confirmation/:token')
+  confirmUser(@Param() param: any) {
+    return this.authService.confirmUser(param);
   }
 
   //*************************************************************************************
@@ -43,12 +52,9 @@ export class AuthController {
       fileFilter: validateFileFormat,
     }),
   )
-  signUp(
-    @Body() signUpDto: SignUpDto,
-    @UploadedFile() avatar: Express.Multer.File,
-  ) {
+  signUp(@Body() body: SignUpDto, @UploadedFile() avatar: Express.Multer.File) {
     //console.log(avatar);
-    return this.authService.signUp(signUpDto, avatar);
+    return this.authService.signUp(body, avatar);
   }
 
   //*************************************************************************************

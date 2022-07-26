@@ -38,11 +38,11 @@ export class UserController {
   )
   @Post('post-meme')
   postMeme(
-    @Body() postMemeDto: PostMemeDto,
+    @Body() body: PostMemeDto,
     @UploadedFile() memeFile: Express.Multer.File,
     @Res() res: Response,
   ) {
-    this.userService.postMeme(postMemeDto, memeFile, res);
+    this.userService.postMeme(body, memeFile, res);
   }
   //*************************************************************************************
   //***************************POST Comment*************************************** */#
@@ -50,8 +50,8 @@ export class UserController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('post-comment')
-  postComment(@Body() postCommentDto: PostCommentDto, @Res() res: Response) {
-    this.userService.postComment(postCommentDto, res);
+  postComment(@Body() body: PostCommentDto, @Res() res: Response) {
+    this.userService.postComment(body, res);
   }
   //*************************************************************************************
   //***************************SET PREFERENCES******************************************

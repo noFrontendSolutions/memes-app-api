@@ -13,16 +13,16 @@ export class UserService {
   //*************************************************************************************
 
   async postMeme(
-    postMemeDto: PostMemeDto,
+    body: PostMemeDto,
     memeFile: Express.Multer.File,
     res: Response,
   ) {
     try {
       const memePost = await this.prisma.meme.create({
         data: {
-          title: postMemeDto.title,
-          user_id: parseInt(postMemeDto.user_id),
-          user_name: postMemeDto.user_name,
+          title: body.title,
+          user_id: parseInt(body.user_id),
+          user_name: body.user_name,
           meme_url: memeFile.path,
         },
       });
@@ -36,14 +36,14 @@ export class UserService {
   //***************************POST Comment*************************************** */#
   //*************************************************************************************
 
-  async postComment(postCommentDto: PostCommentDto, res: Response) {
+  async postComment(body: PostCommentDto, res: Response) {
     try {
       const details = await this.prisma.comment.create({
         data: {
-          content: postCommentDto.content,
-          user_id: parseInt(postCommentDto.user_id),
-          user_name: postCommentDto.user_name,
-          meme_id: parseInt(postCommentDto.meme_id),
+          content: body.content,
+          user_id: parseInt(body.user_id),
+          user_name: body.user_name,
+          meme_id: parseInt(body.meme_id),
         },
       });
       res.send({ ...details });

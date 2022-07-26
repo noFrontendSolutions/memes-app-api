@@ -19,6 +19,7 @@ model User {
   first_name  String
   last_name   String
   avatar_url  String?
+  confirmed   Int         @default(0) @db.SmallInt
   memes       Meme[]
   comments    Comment[]
   preferences MemeStats[]
