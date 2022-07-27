@@ -34,9 +34,11 @@ Here is a preview of to the prototype (deployed on Heroku):
 | :-------------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
 | ![](https://www.dropbox.com/s/ni40z8bmzj96djy/memes-home.jpg?raw=1) | ![](https://www.dropbox.com/s/9rhb4mfzp7bcvl2/memes-creator-wide.jpg?raw=1) |
 <br>
+
+|                       Vote on Memes and leave  Comments                     |                     JWT Authentication                     |
+| :-------------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
+| ![](https://www.dropbox.com/s/ni40z8bmzj96djy/memes-home.jpg?raw=1) | ![](https://www.dropbox.com/s/ypwzw2b9017asn8/login.jpg?raw=1) |
+
 ---
-|                        Vote on Memes and leave  Comments                       |                    Responsive Design          |                   JWT Authentication           |
-| :-----------------------------------------------------------------: | :------------------------------------------------------------: | :------------------------------------------------------------: |
-| ![](https://www.dropbox.com/s/y15yv3g0jpneb22/meme-details.jpg?raw=1) | ![](https://www.dropbox.com/s/nru49nqn7ht16ei/memes-creator-small.jpeg?raw=1) | ![](https://www.dropbox.com/s/ypwzw2b9017asn8/login.jpg?raw=1)
 ---
 
