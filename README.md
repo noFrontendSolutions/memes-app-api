@@ -24,7 +24,7 @@ The API for the MEMES APP (made with Nest Js). For more details follow the link 
 
 Here is a preview of to the prototype (deployed on Heroku):
 
-[https://dashboard.heroku.com/apps/memes-app-react](https://dashboard.heroku.com/apps/memes-app-react)
+[https://memes-app-react.herokuapp.com/](https://memes-app-react.herokuapp.com/)
 
 ---
 ---
