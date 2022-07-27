@@ -11,6 +11,11 @@ export class PublicController {
     return this.publicService.memeInfo();
   }
 
+  @Get('test')
+  async test() {
+    return 'Hello World';
+  }
+
   @Get('meme-image/:id')
   async memeImage(@Param() param, @Res() res: Response) {
     return this.publicService.memeImage(param, res);
