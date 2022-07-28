@@ -21,11 +21,11 @@ The API for the MEMES APP (made with Nest Js). For more details follow the link 
 - Data validation of inputs and files on both frontend and backend
 - Extensive error handling
 - Responsive design
-
+<!--
 Here is a preview of to the prototype (deployed on Heroku):
 
 [https://memes-app-react.herokuapp.com/](https://memes-app-react.herokuapp.com/)
-
+-->
 ---
 ---
 
