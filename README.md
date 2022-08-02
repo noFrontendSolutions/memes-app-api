@@ -20,7 +20,6 @@ The API for the MEMES APP (made with Nest Js). For more details follow the link 
 
 - JWT authentication
 - Data validation of inputs and files on both frontend and backend
-- Extensive error handling
 - Responsive design
 - Uses Nginx as Webserver 
 
