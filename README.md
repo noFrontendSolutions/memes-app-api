@@ -13,6 +13,7 @@ The API for the MEMES APP (made with Nest Js). For more details follow the link 
 
 - Frontend: **React JS**, **Canvas JS**<br>
 - API: **Nest JS**, **Prisma**, **Postgres** 
+- Deploy: **Digital Ocean**, **Ubuntu**
    
 
 ## Features:
@@ -21,7 +22,7 @@ The API for the MEMES APP (made with Nest Js). For more details follow the link 
 - Data validation of inputs and files on both frontend and backend
 - Extensive error handling
 - Responsive design
-- Deployed on Digital Ocean using Nginx as Webserver 
+- Uses Nginx as Webserver 
 
 ---
 Here is a link to a preview of to the prototype (deployed on Digital Ocean):
