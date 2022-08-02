@@ -21,14 +21,14 @@ The API for the MEMES APP (made with Nest Js). For more details follow the link 
 - Data validation of inputs and files on both frontend and backend
 - Extensive error handling
 - Responsive design
-<!--
-Here is a preview of to the prototype (deployed on Heroku):
+- Deployed on Digital Ocean using Nginx as Webserver 
 
-[https://memes-app-react.herokuapp.com/](https://memes-app-react.herokuapp.com/)
--->
+---
+Here is a link to a preview of to the prototype (deployed on Digital Ocean):
+
+[To the App](http://46.101.193.133)
 ---
 ---
-
 
 |                       Contributions                        |                    Create a Meme                    |
 | :-------------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
