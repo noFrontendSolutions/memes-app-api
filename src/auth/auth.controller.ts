@@ -16,7 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { parse } from 'path';
 import { Response } from 'express';
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 

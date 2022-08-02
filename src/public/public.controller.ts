@@ -2,7 +2,7 @@ import { Controller, Get, Param, Res } from '@nestjs/common';
 import { PublicService } from './public.service';
 import { Response } from 'express';
 
-@Controller('public')
+@Controller('api/public')
 export class PublicController {
   constructor(private publicService: PublicService) {}
 

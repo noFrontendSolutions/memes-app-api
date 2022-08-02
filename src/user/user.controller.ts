@@ -18,7 +18,7 @@ import { diskStorage } from 'multer';
 import { PostCommentDto, PostMemeDto, LikeMemeDto } from './dto';
 import { Response } from 'express';
 
-@Controller('users')
+@Controller('api/users')
 export class UserController {
   constructor(private userService: UserService) {}
 
